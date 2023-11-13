@@ -1,0 +1,159 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #b9c5cc 0%, #49657c 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-wrapper {
+  background: linear-gradient(to bottom, #e6f1f5 0%, #d9e8ef 100%);
+  padding: 20px;
+  border-radius: 20px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+
+  /* Multiple box shadows */
+  box-shadow: inset 0 4px 4px rgba(255, 255, 255, 0.6), inset 0 -4px 4px rgba(0, 0, 0, 0.1), 11px 10px 30px rgba(0, 0, 0, 0.7);
+
+  /* Pseudo-element for the glow */
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    right: -2px; bottom: -2px;
+    z-index: -1;
+    background: inherit;
+    border-radius: inherit;
+    box-shadow: 0 2px 20px rgb(206 224 242 / 80%);
+  }
+}
+
+
+/* Title Style */
+h1 {
+  text-align: center;
+  color: #4f6a81;
+  font-size: 36px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.status-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Board Style */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  justify-content: center;
+  align-content: center;
+  gap: 0;
+  background: #8DAEDB;
+  padding: 5px; 
+  box-shadow: inset 0 0 10px #ffffff;
+  border-radius: 10px;
+  margin-top: 14px;
+}
+
+.cell {
+  background-color: #6b9ac3;
+  border: 2px solid #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Remove default button styles */
+.cell:focus {
+  outline: none;
+}
+
+/* Add hover effect for cells */
+.cell:hover {
+  background-color: #AFCDE7;
+}
+
+/* Row Style */
+.row {
+  display: contents;
+}
+
+.horizontal-win::before {
+  /* Common styles for horizontal lines */
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-color: white;
+  content: "";
+}
+
+.middle-row::before {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bottom-row::before {
+  bottom: 0;
+}
+
+.vertical-win::before {
+  /* Common styles for vertical lines */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background-color: white;
+  content: "";
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.middle-col::before {
+  left: 50%;
+}
+
+.right-col::before {
+  right: 0;
+  left: auto;
+}
+
+.diagonal-win::before {
+  /* Common styles for diagonal lines */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 142px;
+  background-color: white;
+  content: "";
+  transform: rotate(-45deg);
+  transform-origin: 2px 5px;
+}
+
+.diagonal-win.reverse::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 142px;
+  background-color: white;
+  content: "";
+  transform: rotate(45deg);
+  left: auto;
+  transform-origin: 100% 5px;
+}
