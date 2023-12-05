@@ -10,7 +10,7 @@ function StatusMessage({ gameState, playerSymbol, onPlayAgain }) {
     if (gameState.winning_line) {
         // Display the winning message
         statusMessage = `${
-            gameState.current_player === 'X' ? 'O' : 'X'
+            gameState.winnerPlayer
         } wins!`;
         showPlayAgain = true;
     } else if (gameState.game_status === 'Active') {

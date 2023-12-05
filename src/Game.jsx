@@ -77,6 +77,24 @@ function Game() {
         }
     };
 
+    const createNewGameWithAI = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/new_game`, {
+                method: 'POST',
+                body: JSON.stringify({ ai: true }),
+            });
+            const { game_id } = await response.json();
+            setGameState({
+                ...gameState,
+                game_id,
+            });
+            window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/?game_id=${game_id}`;
+        } catch (error) {
+            console.error('Error creating new game:', error);
+        }
+    };
+
+
     const handlePlayAgain = () => {
         if (socket && gameState.game_id) {
             socket.emit('reset_game', { game_id: gameState.game_id });
@@ -86,9 +104,15 @@ function Game() {
     return (
         <div className="game-wrapper">
             <h1>Tic Tac Toe</h1>
+            <div className='button-wrapper'>
+
             {gameState.game_id === null && <Button variant="contained" color="primary" onClick={createNewGame}>
-                Create New Game
+                Play with a friend
             </Button>}
+            {gameState.game_id === null && <Button variant="contained" color="secondary" onClick={createNewGameWithAI}>
+                Play with AI
+            </Button>}
+            </div>
             <GameLinkDialog
                 open={openDialog}
                 gameId={gameState.game_id}

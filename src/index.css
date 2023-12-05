@@ -34,6 +34,16 @@ body {
   }
 }
 
+.button-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .MuiButtonBase-root{
+    flex: 1;
+    margin: 10px;
+  }
+}
 
 /* Title Style */
 h1 {
