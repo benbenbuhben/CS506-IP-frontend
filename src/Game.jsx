@@ -8,7 +8,7 @@ import { Button } from '@mui/material';
 function Game() {
     const socket = useSocket();
     const [gameState, setGameState] = useState({
-        board: Array(9).fill(null),
+        board: Array(24).fill(null),
         current_player: null,
         game_id: null,
         game_status: "Not started",
@@ -56,6 +56,7 @@ function Game() {
     }, [socket]);
 
     const handleCellClick = (i) => {
+        console.log(i)
         if (gameState.current_player === playerSymbol && gameState.board[i] === ' ') {
             socket.emit('make_move', { position: i, game_id: gameState.game_id });
         }
