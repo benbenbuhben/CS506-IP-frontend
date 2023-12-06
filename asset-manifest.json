@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/CS506-IP-frontend/static/css/main.0c2bc008.css",
+    "main.js": "/CS506-IP-frontend/static/js/main.7f620a45.js",
+    "index.html": "/CS506-IP-frontend/index.html",
+    "main.0c2bc008.css.map": "/CS506-IP-frontend/static/css/main.0c2bc008.css.map",
+    "main.7f620a45.js.map": "/CS506-IP-frontend/static/js/main.7f620a45.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c2bc008.css",
+    "static/js/main.7f620a45.js"
+  ]
+}
