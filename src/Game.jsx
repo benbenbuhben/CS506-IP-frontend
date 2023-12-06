@@ -8,11 +8,12 @@ import { Button } from '@mui/material';
 function Game() {
     const socket = useSocket();
     const [gameState, setGameState] = useState({
-        board: Array(9).fill(null),
+        board: Array(24).fill(null),
         current_player: null,
         game_id: null,
         game_status: "Not started",
         winning_line: null,
+        is_ai: false,
     });
     const [playerSymbol, setPlayerSymbol] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
@@ -56,6 +57,7 @@ function Game() {
     }, [socket]);
 
     const handleCellClick = (i) => {
+        console.log(i)
         if (gameState.current_player === playerSymbol && gameState.board[i] === ' ') {
             socket.emit('make_move', { position: i, game_id: gameState.game_id });
         }
@@ -65,6 +67,10 @@ function Game() {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/new_game`, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}), 
             });
             const { game_id } = await response.json();
             setGameState({
@@ -77,25 +83,55 @@ function Game() {
         }
     };
 
+    const createNewGameWithAI = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/new_game`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ai: true }),
+            });
+            const { game_id } = await response.json();
+            setGameState({
+                ...gameState,
+                game_id,
+                is_ai: true,
+            });
+            window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/?game_id=${game_id}`;
+        } catch (error) {
+            console.error('Error creating new game:', error);
+        }
+    };
+
+
     const handlePlayAgain = () => {
         if (socket && gameState.game_id) {
             socket.emit('reset_game', { game_id: gameState.game_id });
         }
     };
 
+    console.log(gameState)
+
     return (
         <div className="game-wrapper">
             <h1>Tic Tac Toe</h1>
+            <div className='button-wrapper'>
+
             {gameState.game_id === null && <Button variant="contained" color="primary" onClick={createNewGame}>
-                Create New Game
+                Play with a friend
             </Button>}
+            {gameState.game_id === null && <Button variant="contained" color="secondary" onClick={createNewGameWithAI}>
+                Play with AI
+            </Button>}
+            </div>
             <GameLinkDialog
                 open={openDialog}
                 gameId={gameState.game_id}
                 onClose={handleCloseDialog}
                 onJoinGame={joinGame}
             />
-            <StatusMessage gameState={gameState} playerSymbol={playerSymbol} onPlayAgain={handlePlayAgain} />
+            <StatusMessage isAI={gameState.is_ai} gameState={gameState} playerSymbol={playerSymbol} onPlayAgain={handlePlayAgain} />
             <Board gameState={gameState.board} onCellClick={handleCellClick} winningLine={gameState.winning_line} />
         </div>
     );

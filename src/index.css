@@ -34,6 +34,16 @@ body {
   }
 }
 
+.button-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .MuiButtonBase-root{
+    flex: 1;
+    margin: 10px;
+  }
+}
 
 /* Title Style */
 h1 {
@@ -53,8 +63,8 @@ h1 {
 /* Board Style */
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(5, 100px);
   justify-content: center;
   align-content: center;
   gap: 0;
